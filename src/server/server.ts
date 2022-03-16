@@ -10,7 +10,7 @@ const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
 
-mongoose.connect('mongodb://localhost:27017/test')
+mongoose.connect('mongodb://localhost:27017/test1')
 .then(() => {
     console.log('Connected to DB Successfully');
 })
@@ -43,11 +43,13 @@ app.get('/users', function(req,res){
     })
 });
 app.post('/create-user', function(req,res){
-    const {name, email, username} = req.body;
+    const {firstname, email, lastname,password,points} = req.body;
     const user = new UserModel({
-        name,
-        username,
+        firstname,
+        lastname,
         email,
+        password,
+        points
     });
     user.save()
     .then((data) => {
