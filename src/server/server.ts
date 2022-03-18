@@ -35,14 +35,14 @@ app.post("/create-payment", function (req, res) {
         source: req.body.id,
       })
       .then((charge) => {
-        console.log(charge);
+     
         res.json({charge});
       })
       .catch((err) => {
-        console.log(err)
+       
         res.sendStatus(501);
       });
-      console.log(req.body)
+
   });
 
 app.get('/', function(req, res) {
