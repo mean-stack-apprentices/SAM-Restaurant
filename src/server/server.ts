@@ -11,13 +11,16 @@ import AdminJSMongoose from '@adminjs/mongoose'
 //Registers adapter to allow adminJs to connect to mongoose
 AdminJS.registerAdapter(AdminJSMongoose)
 
+
+
+const app = express();
+const __dirname = path.resolve();
+const PORT = 3501;
+
 const run = async() => {
     //Moved mongoose connection inside of this for adminJS to use
-    const connection = mongoose.connect('mongodb://localhost:27017/restaurant')
-    .then(() => {
-        console.log('Connected to DB Successfully');
-    })
-    .catch(err => console.log('Failed to Connect to DB', err));
+    const connection = await mongoose.connect('mongodb://localhost:27017/restaurant')
+    
 
     const AdminJSOptions = new AdminJS({
         databases: [connection],
@@ -29,11 +32,6 @@ const run = async() => {
 }
 
 run()
-
-const app = express();
-const __dirname = path.resolve();
-const PORT = 3501;
-
 
 
 
