@@ -14,13 +14,21 @@ import * as fromUser from './store/reducers/user/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './store/effects/user/user.effects';
 import { PageUsersComponent } from './pages/page-users/page-users.component';
+import { HeaderComponent } from './pages/header/header.component';
+import { MenuListComponent } from './pages/menu-list/menu-list.component';
+import { HomeComponent } from './pages/home/home.component';
+import { NavigationComponent } from './pages/navigation/navigation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersListComponent,
     UserInputComponent,
-    PageUsersComponent
+    PageUsersComponent,
+    HeaderComponent,
+    MenuListComponent,
+    HomeComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
