@@ -1,25 +1,70 @@
-
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { PostModel } from './schemas/post.schema.js';
-import { UserModel } from './schemas/user.schema.js'
+import { UserModel } from './schemas/user.schema.js';
+import { OrderItemModel } from './schemas/orderItems.schema.js';
+import { OrdersModel } from './schemas/orders.schema.js';
 import mongoose from 'mongoose';
+import Stripe from "stripe";
+import AdminJSExpress from '@adminjs/express';
+import AdminJS from 'adminjs';
+import AdminJSMongoose from '@adminjs/mongoose'
+//Registers adapter to allow adminJs to connect to mongoose
+AdminJS.registerAdapter(AdminJSMongoose)
+
+
 
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
 
-mongoose.connect('mongodb://localhost:27017/samRestaurant')
-.then(() => {
-    console.log('Connected to DB Successfully');
-})
-.catch(err => console.log('Failed to Connect to DB', err))
+
+const run = async() => {
+    //Moved mongoose connection inside of this for adminJS to use
+    const connection = await mongoose.connect('mongodb://localhost:27017/restaurant')
+    
+
+    const AdminJSOptions = new AdminJS({
+        databases: [connection],
+        rootPath: '/admin'
+    })
+
+    const router = AdminJSExpress.buildRouter(AdminJSOptions)
+    app.use(AdminJSOptions.options.rootPath, router)
+}
+
+run()
+
 
 
 
 app.use(cors());
 app.use(express.json());
+
+
+const secret =process.env.STRIPE_SECRET_KEY as string;
+export const stripe = new Stripe(secret, {
+  apiVersion: "2020-08-27",
+});
+
+app.post("/create-payment", function (req, res) {
+    stripe.charges.create({
+        amount: req.body.amount,
+        description: "Payment",
+        currency: "USD",
+        source: req.body.id,
+      })
+      .then((charge) => {
+     
+        res.json({charge});
+      })
+      .catch((err) => {
+       
+        res.sendStatus(501);
+      });
+
+  });
 
 app.get('/', function(req, res) {
    res.json({message:'test'});
