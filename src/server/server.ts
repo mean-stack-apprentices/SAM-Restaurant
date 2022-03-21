@@ -13,7 +13,7 @@ AdminJS.registerAdapter(AdminJSMongoose)
 
 const run = async() => {
     //Moved mongoose connection inside of this for adminJS to use
-    const connection = mongoose.connect('mongodb://localhost:27017/test1')
+    const connection = mongoose.connect('mongodb://localhost:27017/restaurant')
     .then(() => {
         console.log('Connected to DB Successfully');
     })
