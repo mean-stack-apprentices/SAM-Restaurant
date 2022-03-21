@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { orderItems } from './../../shared/models/orderItems.model';
+import { orderItems } from './../../shared/models/orderItems.model.js';
 
 const { Schema, model } = mongoose
 
