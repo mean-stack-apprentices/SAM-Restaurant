@@ -5,7 +5,7 @@ import path from 'path';
 import { PostModel } from './schemas/post.schema.js';
 import { UserModel } from './schemas/user.schema.js'
 import mongoose from 'mongoose';
-
+import Stripe from "stripe";
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
@@ -20,6 +20,30 @@ mongoose.connect('mongodb://localhost:27017/test1')
 
 app.use(cors());
 app.use(express.json());
+
+
+const secret =process.env.STRIPE_SECRET_KEY as string;
+export const stripe = new Stripe(secret, {
+  apiVersion: "2020-08-27",
+});
+
+app.post("/create-payment", function (req, res) {
+    stripe.charges.create({
+        amount: req.body.amount,
+        description: "Payment",
+        currency: "USD",
+        source: req.body.id,
+      })
+      .then((charge) => {
+     
+        res.json({charge});
+      })
+      .catch((err) => {
+       
+        res.sendStatus(501);
+      });
+
+  });
 
 app.get('/', function(req, res) {
    res.json({message:'test'});
