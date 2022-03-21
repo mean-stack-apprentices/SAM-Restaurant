@@ -2,7 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { PostModel } from './schemas/post.schema.js';
-import { UserModel } from './schemas/user.schema.js'
+import { UserModel } from './schemas/user.schema.js';
+import { OrderItemModel } from './schemas/orderItems.schema.js';
+import { OrdersModel } from './schemas/orders.schema.js';
 import mongoose from 'mongoose';
 import Stripe from "stripe";
 import AdminJSExpress from '@adminjs/express';
