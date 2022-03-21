@@ -103,6 +103,15 @@ app.post('/create-user', function(req,res){
         res.status(501);
         res.json({errors: err});
     })
+});      
+
+app.get('/orders', function(req,res){
+    OrdersModel.find(req.body.user._id)
+    .then((data: any) => res.json({data}))
+    .catch((err: any) => {
+        res.status(501)
+        res.json({errors: err});
+    })
 });
 
 app.post('/create-post', function(req,res){
@@ -120,6 +129,8 @@ app.post('/create-post', function(req,res){
         res.json({errors: err});
     })
 });
+
+
 
 app.delete('/delete-user/:id', function(req, res) {
     const _id = req.params.id;
