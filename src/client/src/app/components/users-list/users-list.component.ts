@@ -32,10 +32,10 @@ export class UsersListComponent implements OnInit {
 
 
 
-  deleteUser(user: User) {
-    this.store.dispatch(deleteUser({data: user}))
-    console.log(`user '${user.name}' deleted successfully`);
-  }
+  // deleteUser(user: User) {
+  //   this.store.dispatch(deleteUser({data: user}))
+  //   console.log(`user '${user.name}' deleted successfully`);
+  // }
 
   selectUser(user: User, selectedUser: User | null) {
     this.store.dispatch(selectUserAction({data: this.isSelected(selectedUser, user) ?  null : user}))
