@@ -1,4 +1,3 @@
-
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -6,6 +5,12 @@ import { PostModel } from './schemas/post.schema.js';
 import { UserModel } from './schemas/user.schema.js'
 import mongoose from 'mongoose';
 import Stripe from "stripe";
+import AdminJSExpress from '@adminjs/express';
+import AdminJS from 'adminjs';
+import AdminJSMongoose from '@adminjs/mongoose'
+//Registers adapter to allow adminJs to connect to mongoose
+AdminJS.registerAdapter(AdminJSMongoose)
+
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
