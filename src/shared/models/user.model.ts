@@ -4,6 +4,7 @@ export interface User {
     firstname: string,
     lastname: string,
     email: string,
-    password: string,
+    encryptedPassword: string,
     points:string
+    role: string
 }
