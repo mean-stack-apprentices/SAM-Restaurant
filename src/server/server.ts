@@ -24,18 +24,73 @@ const PORT = 3501;
 const run = async() => {
     //Moved mongoose connection inside of this for adminJS to use
     const connection = await mongoose.connect('mongodb://localhost:27017/restaurant')
+
+    
     
 
     const AdminJSOptions = new AdminJS({
-        databases: [connection],
-        rootPath: '/admin'
+        resources: [{
+            resource: UserModel,
+            options: {
+                properties: {
+                    encryptedPassword: {
+                        isVisible: false,
+                    },
+                    password: {
+                        type: 'string',
+                        isVisible: {
+                            list: false, edit: true, filter: false, show: false
+                        },
+                    },
+                },
+                actions: {
+                    new: {
+                        before: async (req: any) => {
+                            if(req.payload.password) {
+                                req.payload = {
+                                    ...req.payload,
+                                    encryptedPassword: await bcrypt.hash(req.payload.password, 10),
+                                    password: undefined,
+                                }
+                            }
+                            return req
+                        },
+                    }
+                }
+            }
+        }, PostModel],
+        rootPath: '/admin',
+        branding: {
+            companyName: 'SAM Restaurant',
+            softwareBrothers: false,
+            logo: 'https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/branding/panera-bread-logo-no-mother-bread.svg'
+        },
+        // dashboard: {
+        //     handler: async () => {
+
+        //     },
+        //     component: AdminJS.bundle('../../src/server/Dashboard-component')
+        // }
     })
 
-    const router = AdminJSExpress.buildRouter(AdminJSOptions)
+    const router = AdminJSExpress.buildAuthenticatedRouter(AdminJSOptions, {
+        authenticate: async (email, password) => {
+            const user = await UserModel.findOne({ email })
+            if(user) {
+                const matched = await bcrypt.compare(password, user.encryptedPassword)
+                if(matched) {
+                    return user
+                }
+            }
+            return false
+        },
+        cookiePassword: 'some-secret-key',
+    })
     app.use(AdminJSOptions.options.rootPath, router)
 }
 
 run()
+
 
 
 
