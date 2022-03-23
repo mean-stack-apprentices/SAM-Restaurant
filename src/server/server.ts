@@ -10,6 +10,7 @@ import Stripe from "stripe";
 import AdminJSExpress from '@adminjs/express';
 import AdminJS from 'adminjs';
 import AdminJSMongoose from '@adminjs/mongoose'
+import bcrypt from 'bcrypt';
 //Registers adapter to allow adminJs to connect to mongoose
 AdminJS.registerAdapter(AdminJSMongoose)
 
@@ -23,18 +24,70 @@ const PORT = 3501;
 const run = async() => {
     //Moved mongoose connection inside of this for adminJS to use
     const connection = await mongoose.connect('mongodb://localhost:27017/restaurant')
+
+    
     
 
     const AdminJSOptions = new AdminJS({
-        databases: [connection],
-        rootPath: '/admin'
+        resources: [{
+            resource: UserModel,
+            options: {
+                properties: {
+                    encryptedPassword: {
+                        isVisible: false,
+                    },
+                    password: {
+                        type: 'string',
+                        isVisible: {
+                            list: false, edit: true, filter: false, show: false
+                        },
+                    },
+                },
+                actions: {
+                    new: {
+                        before: async (req: any) => {
+                            if(req.payload.password) {
+                                req.payload = {
+                                    ...req.payload,
+                                    encryptedPassword: await bcrypt.hash(req.payload.password, 10),
+                                    password: undefined,
+                                }
+                            }
+                            return req
+                        },
+                    }
+                }
+            }
+        }, PostModel],
+        rootPath: '/admin',
+        //branding is the look of adminjs so i changed our company names, removed a logo, and added our 'logo'
+        branding: {
+            companyName: 'SAM Restaurant',
+            softwareBrothers: false,
+            logo: 'https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/branding/panera-bread-logo-no-mother-bread.svg'
+        },
     })
-
-    const router = AdminJSExpress.buildRouter(AdminJSOptions)
+    //creates an adminJS autheticated router to actually check user login 
+    const router = AdminJSExpress.buildAuthenticatedRouter(AdminJSOptions, {
+        authenticate: async (email, password) => {
+            const user = await UserModel.findOne({ email })
+            if(user) {
+                const matched = await bcrypt.compare(password, user.encryptedPassword)
+                if(matched) {
+                    return user
+                }
+            }
+            return false
+        },
+        //cookie stuff im not too sure how it works either
+        cookiePassword: 'some-secret-key',
+    })
+    //just calling on the options we've specified and using the router 
     app.use(AdminJSOptions.options.rootPath, router)
 }
 
 run()
+
 
 
 
