@@ -65,12 +65,6 @@ const run = async() => {
             softwareBrothers: false,
             logo: 'https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/branding/panera-bread-logo-no-mother-bread.svg'
         },
-        // dashboard: {
-        //     handler: async () => {
-
-        //     },
-        //     component: AdminJS.bundle('../../src/server/Dashboard-component')
-        // }
     })
 
     const router = AdminJSExpress.buildAuthenticatedRouter(AdminJSOptions, {
