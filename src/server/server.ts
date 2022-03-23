@@ -60,13 +60,14 @@ const run = async() => {
             }
         }, PostModel],
         rootPath: '/admin',
+        //branding is the look of adminjs so i changed our company names, removed a logo, and added our 'logo'
         branding: {
             companyName: 'SAM Restaurant',
             softwareBrothers: false,
             logo: 'https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/branding/panera-bread-logo-no-mother-bread.svg'
         },
     })
-
+    //creates an adminJS autheticated router to actually check user login 
     const router = AdminJSExpress.buildAuthenticatedRouter(AdminJSOptions, {
         authenticate: async (email, password) => {
             const user = await UserModel.findOne({ email })
@@ -78,8 +79,10 @@ const run = async() => {
             }
             return false
         },
+        //cookie stuff im not too sure how it works either
         cookiePassword: 'some-secret-key',
     })
+    //just calling on the options we've specified and using the router 
     app.use(AdminJSOptions.options.rootPath, router)
 }
 
