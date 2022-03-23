@@ -10,6 +10,7 @@ import Stripe from "stripe";
 import AdminJSExpress from '@adminjs/express';
 import AdminJS from 'adminjs';
 import AdminJSMongoose from '@adminjs/mongoose'
+import bcrypt from 'bcrypt';
 //Registers adapter to allow adminJs to connect to mongoose
 AdminJS.registerAdapter(AdminJSMongoose)
 
