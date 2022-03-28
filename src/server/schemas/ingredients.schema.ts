@@ -5,7 +5,7 @@ const { Schema, model } = mongoose
 
 const IngredientsSchema = new Schema<Ingredients>({
     
-    name: { type: mongoose.Types.ObjectId, ref: 'menuItems' },
+    name: { type: String },
     
     imgUrl: {
         type: String, required: true

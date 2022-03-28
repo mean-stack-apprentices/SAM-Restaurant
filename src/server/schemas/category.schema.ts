@@ -4,7 +4,7 @@ const { Schema, model } = mongoose
 
 const CategorySchema = new Schema<Category>({
     
-    name: { type: mongoose.Types.ObjectId, ref: 'menuItems' },
+    name: { type: String, required: true},
     
     icon: {
         type: String, required: true
