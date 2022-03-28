@@ -61,7 +61,7 @@ const run = async() => {
                     }
                 }
             }
-        }, PostModel],
+        }, MenuItemModel, CategoryModel, IngredientsModel],
         rootPath: '/admin',
         //branding is the look of adminjs so i changed our company names, removed a logo, and added our 'logo'
         branding: {
