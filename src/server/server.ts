@@ -5,6 +5,9 @@ import { PostModel } from './schemas/post.schema.js';
 import { UserModel } from './schemas/user.schema.js';
 import { OrderItemModel } from './schemas/orderItems.schema.js';
 import { OrdersModel } from './schemas/orders.schema.js';
+import { MenuItemModel } from './schemas/menuItems.schema.js';
+import { CategoryModel } from './schemas/category.schema.js';
+import { IngredientsModel } from './schemas/ingredients.schema.js';
 import mongoose from 'mongoose';
 import Stripe from "stripe";
 import AdminJSExpress from '@adminjs/express';
@@ -58,7 +61,7 @@ const run = async() => {
                     }
                 }
             }
-        }, PostModel],
+        }, MenuItemModel, CategoryModel, IngredientsModel],
         rootPath: '/admin',
         //branding is the look of adminjs so i changed our company names, removed a logo, and added our 'logo'
         branding: {
