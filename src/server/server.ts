@@ -104,6 +104,8 @@ export const stripe = new Stripe(secret, {
   apiVersion: "2020-08-27",
 });
 
+app.use('/uploads', express.static('uploads'))
+
 app.post("/create-payment", function (req, res) {
     stripe.charges.create({
         amount: req.body.amount,
