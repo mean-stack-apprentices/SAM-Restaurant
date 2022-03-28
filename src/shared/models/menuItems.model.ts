@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
-import { Category } from './category.model';
-import { Ingredients } from './ingredients.model';
+import { Category } from './category.model.js';
+import { Ingredients } from './ingredients.model.js';
 
 
 export interface MenuItems {
