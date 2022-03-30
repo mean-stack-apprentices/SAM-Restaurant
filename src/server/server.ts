@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { PostModel } from './schemas/post.schema.js';
-import { UserModel } from './schemas/user.schema.js';
+import { AdminModel } from './schemas/admin.schema.js';
 import { OrderItemModel } from './schemas/orderItems.schema.js';
 import { OrdersModel } from './schemas/orders.schema.js';
 import { MenuItemModel } from './schemas/menuItems.schema.js';
@@ -33,7 +33,7 @@ const run = async() => {
 
     const AdminJSOptions = new AdminJS({
         resources: [{
-            resource: UserModel,
+            resource: AdminModel,
             options: {
                 properties: {
                     encryptedPassword: {
@@ -73,11 +73,11 @@ const run = async() => {
     //creates an adminJS autheticated router to actually check user login 
     const router = AdminJSExpress.buildAuthenticatedRouter(AdminJSOptions, {
         authenticate: async (email, password) => {
-            const user = await UserModel.findOne({ email })
-            if(user) {
-                const matched = await bcrypt.compare(password, user.encryptedPassword)
+            const admin = await AdminModel.findOne({ email })
+            if(admin) {
+                const matched = await bcrypt.compare(password, admin.encryptedPassword)
                 if(matched) {
-                    return user
+                    return admin
                 }
             }
             return false
