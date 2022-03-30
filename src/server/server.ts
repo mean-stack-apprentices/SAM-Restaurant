@@ -3,6 +3,7 @@ import cors from 'cors';
 import path from 'path';
 import { PostModel } from './schemas/post.schema.js';
 import { AdminModel } from './schemas/admin.schema.js';
+import { UserModel } from './schemas/user.schema.js';
 import { OrderItemModel } from './schemas/orderItems.schema.js';
 import { OrdersModel } from './schemas/orders.schema.js';
 import { MenuItemModel } from './schemas/menuItems.schema.js';
