@@ -10,6 +10,6 @@ export class IngredientsService {
 
   constructor(private api:ApiService) { }
   getIngredients() {
-    this.api.get<{ data: Ingredients[] }>('ingredients').pipe(map((res) => res.data));
+    return this.api.get<{ data: Ingredients[] }>('ingredients').pipe(map((res) => res.data));
   }
 }

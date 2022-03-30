@@ -10,6 +10,6 @@ export class CategoryService {
 
   constructor(private api:ApiService) { }
   getCategories() {
-    this.api.get<{ data: Category[] }>('category').pipe(map((res) => res.data));
+   return this.api.get<{ data: Category[] }>('category').pipe(map((res) => res.data));
   }
 }
