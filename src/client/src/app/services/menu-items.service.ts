@@ -11,7 +11,7 @@ export class MenuItemsService {
 
   constructor(private api: ApiService) { }
   getMenuItems() {
-    this.api.get<{ data: MenuItems[] }>('menu-Items').pipe(map((res) => res.data));
+    return this.api.get<{ data: MenuItems[] }>('menu-Items').pipe(map((res) => res.data));
   }
 
 }
