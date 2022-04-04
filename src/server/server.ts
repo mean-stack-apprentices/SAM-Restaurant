@@ -11,19 +11,17 @@ import { CategoryModel } from './schemas/category.schema.js';
 import { IngredientsModel } from './schemas/ingredients.schema.js';
 import mongoose from 'mongoose';
 import Stripe from "stripe";
-import AdminJSExpress from '@adminjs/express';
-import AdminJS from 'adminjs';
-import AdminJSMongoose from '@adminjs/mongoose'
-import bcrypt from 'bcrypt';
+import AdminJSExpress from "@adminjs/express";
+import AdminJS from "adminjs";
+import AdminJSMongoose from "@adminjs/mongoose";
+import bcrypt from "bcrypt";
+import uploadFeature from "@adminjs/upload";
 //Registers adapter to allow adminJs to connect to mongoose
-AdminJS.registerAdapter(AdminJSMongoose)
-
-
+AdminJS.registerAdapter(AdminJSMongoose);
 
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
-
 
 const run = async() => {
     //Moved mongoose connection inside of this for adminJS to use
@@ -61,193 +59,211 @@ const run = async() => {
                         },
                     }
                 }
-            }
-        }, MenuItemModel, CategoryModel, IngredientsModel],
-        rootPath: '/admin',
-        //branding is the look of adminjs so i changed our company names, removed a logo, and added our 'logo'
-        branding: {
-            companyName: 'SAM Restaurant',
+              },
+            },{
+              resource: MenuItemModel,
+              features: [
+                uploadFeature({
+                  provider: { local: { bucket: "public" } },
+                  properties: {
+                    key: "userKey",
+                    file: "file upload",
+                    filesToDelete: "userFilesToDelete",
+                    filePath: 'menu',
+                    bucket: undefined,
+                    mimeType: undefined,
+                    size: undefined,
+                    filename: undefined,
+                  },
+                }),
+              ],
+            },
+            CategoryModel,
+            IngredientsModel,
+          ],
+          rootPath: "/admin",
+          //branding is the look of adminjs so i changed our company names, removed a logo, and added our 'logo'
+          branding: {
+            companyName: "SAM Restaurant",
             softwareBrothers: false,
-            logo: 'https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/branding/panera-bread-logo-no-mother-bread.svg'
-        },
-    })
-    //creates an adminJS autheticated router to actually check user login 
-    const router = AdminJSExpress.buildAuthenticatedRouter(AdminJSOptions, {
-        authenticate: async (email, password) => {
-            const admin = await AdminModel.findOne({ email })
-            if(admin) {
-                const matched = await bcrypt.compare(password, admin.encryptedPassword)
-                if(matched) {
-                    return admin
-                }
-            }
-            return false
-        },
-        //cookie stuff im not too sure how it works either
-        cookiePassword: 'some-secret-key',
-    })
-    //just calling on the options we've specified and using the router 
-    app.use(AdminJSOptions.options.rootPath, router)
-}
+            logo: "https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/branding/panera-bread-logo-no-mother-bread.svg",
+          },
+        });
+          
+        
+      
+  //creates an adminJS autheticated router to actually check user login
+  const router = AdminJSExpress.buildAuthenticatedRouter(AdminJSOptions, {
+    authenticate: async (email, password) => {
+      const admin = await AdminModel.findOne({ email });
+      if (admin) {
+        const matched = await bcrypt.compare(password, admin.encryptedPassword);
+        if (matched) {
+          return admin;
+        }
+      }
+      return false;
+    },
+    //cookie stuff im not too sure how it works either
+    cookiePassword: "some-secret-key",
+  });
+  //just calling on the options we've specified and using the router
+  app.use(AdminJSOptions.options.rootPath, router);
+};
 
-run()
-
-
-
-
+run();
 
 app.use(cors());
 app.use(express.json());
 
-
-const secret =process.env.STRIPE_SECRET_KEY as string;
+const secret = process.env.STRIPE_SECRET_KEY as string;
 export const stripe = new Stripe(secret, {
   apiVersion: "2020-08-27",
 });
 
-app.use('/uploads', express.static('uploads'))
+// const path = require('path');
+
+app.use('/public', express.static('public'))
+
+
 
 app.post("/create-payment", function (req, res) {
-    stripe.charges.create({
-        amount: req.body.amount,
-        description: "Payment",
-        currency: "USD",
-        source: req.body.id,
-      })
-      .then((charge) => {
-     
-        res.json({charge});
-      })
-      .catch((err) => {
-       
-        res.sendStatus(501);
-      });
+  stripe.charges
+    .create({
+      amount: req.body.amount,
+      description: "Payment",
+      currency: "USD",
+      source: req.body.id,
+    })
+    .then((charge) => {
+      res.json({ charge });
+    })
+    .catch((err) => {
+      res.sendStatus(501);
+    });
+});
 
+app.get("/", function (req, res) {
+  res.json({ message: "test" });
+});
+
+app.get("/posts", function (req, res) {
+  PostModel.find()
+    .then((data) => res.json({ data }))
+    .catch((err) => {
+      res.status(501);
+      res.json({ errors: err });
+    });
+});
+
+app.get("/users", function (req, res) {
+  UserModel.find()
+    .then((data) => res.json({ data }))
+    .catch((err) => {
+      res.status(501);
+      res.json({ errors: err });
+    });
+});
+
+app.get("/menu-items", function (req, res) {
+  MenuItemModel.find()
+    .then((data: any) => res.json({ data }))
+    .catch((err: any) => {
+      res.status(501);
+      res.json({ errors: err });
+    });
+});
+
+app.get("/category", function (req, res) {
+  CategoryModel.find()
+    .then((data: any) => res.json({ data }))
+    .catch((err: any) => {
+      res.status(501);
+      res.json({ errors: err });
+    });
+});
+app.get("/ingredients", function (req, res) {
+  IngredientsModel.find()
+    .then((data: any) => res.json({ data }))
+    .catch((err: any) => {
+      res.status(501);
+      res.json({ errors: err });
+    });
+});
+app.post("/create-user", function (req, res) {
+  const { firstname, email, lastname, password, points } = req.body;
+  const user = new UserModel({
+    firstname,
+    lastname,
+    email,
+    password,
+    points,
   });
-
-app.get('/', function(req, res) {
-   res.json({message:'test'});
-});
-
-app.get('/posts', function(req,res){
-    PostModel.find()
-    .then(data => res.json({data}))
-    .catch(err => {
-        res.status(501)
-        res.json({errors: err});
-    })
-});
-
-app.get('/users', function(req,res){
-    UserModel.find()
-    .then(data => res.json({data}))
-    .catch(err => {
-        res.status(501)
-        res.json({errors: err});
-    })
-});
-
-app.get('/menu-items', function(req,res){
-MenuItemModel.find()
-    .then((data:any) => res.json({data}))
-    .catch((err:any) => {
-        res.status(501)
-        res.json({errors: err});
-    })
-});
-
-app.get('/category', function(req,res){
-    CategoryModel.find()
-    .then((data: any) => res.json({data}))
-    .catch((err: any) => {
-        res.status(501)
-        res.json({errors: err});
-    })
-});
-app.get('/ingredients', function(req,res){
-    IngredientsModel.find()
-    .then((data: any) => res.json({data}))
-    .catch((err: any) => {
-        res.status(501)
-        res.json({errors: err});
-    })
-});
-app.post('/create-user', function(req,res){
-    const {firstname, email, lastname,password,points} = req.body;
-    const user = new UserModel({
-        firstname,
-        lastname,
-        email,
-        password,
-        points
-    });
-    user.save()
+  user
+    .save()
     .then((data) => {
-        res.json({data});
+      res.json({ data });
     })
-    .catch(err => {
-        res.status(501);
-        res.json({errors: err});
-    })
-});      
+    .catch((err) => {
+      res.status(501);
+      res.json({ errors: err });
+    });
+});
 
-app.get('/orders', function(req,res){
-    OrdersModel.find(req.body.user._id)
-    .then((data: any) => res.json({data}))
+app.get("/orders", function (req, res) {
+  OrdersModel.find(req.body.user._id)
+    .then((data: any) => res.json({ data }))
     .catch((err: any) => {
-        res.status(501)
-        res.json({errors: err});
-    })
+      res.status(501);
+      res.json({ errors: err });
+    });
 });
 
-app.post('/create-post', function(req,res){
-    const {title, body} = req.body;
-    const post = new PostModel({
-        title,
-        body,
-    });
-    post.save()
+app.post("/create-post", function (req, res) {
+  const { title, body } = req.body;
+  const post = new PostModel({
+    title,
+    body,
+  });
+  post
+    .save()
     .then((data) => {
-        res.json({data});
+      res.json({ data });
     })
-    .catch(err => {
-        res.status(501);
-        res.json({errors: err});
-    })
+    .catch((err) => {
+      res.status(501);
+      res.json({ errors: err });
+    });
 });
 
+app.delete("/delete-user/:id", function (req, res) {
+  const _id = req.params.id;
+  UserModel.findByIdAndDelete(_id).then((data) => {
+    console.log(data);
+    res.json({ data });
+  });
+});
 
+app.put("/update-user/:id", function (req, res) {
+  console.log("Update user");
+  UserModel.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: { name: req.body.name, email: req.body.email },
+    },
+    {
+      new: true,
+    },
+    function (err, updateUser) {
+      if (err) {
+        res.send("Error updating user");
+      } else {
+        res.json(updateUser);
+      }
+    }
+  );
+});
 
-app.delete('/delete-user/:id', function(req, res) {
-    const _id = req.params.id;
-    UserModel.findByIdAndDelete(_id).then((data) => {
-        console.log(data);
-        res.json({data});
-    });
-})
-
-app.put('/update-user/:id', function(req, res) {
-    console.log("Update user");
-    UserModel.findByIdAndUpdate(
-        req.params.id,
-        {
-            $set: { name: req.body.name, email: req.body.email },
-        },
-        {
-            new: true,
-        },
-        function(err, updateUser) {
-            if(err) {
-                res.send("Error updating user");
-            }
-            else{
-                res.json(updateUser);
-            }
-        }
-    )
-})
-
-
-app.listen(PORT, function(){
-    console.log( `starting at localhost http://localhost:${PORT}`);
-})
+app.listen(PORT, function () {
+  console.log(`starting at localhost http://localhost:${PORT}`);
+});
