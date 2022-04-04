@@ -1,9 +1,9 @@
 import * as mongoose from 'mongoose';
-export interface User {
+export interface Admin {
     _id?:{type: mongoose.Types.ObjectId}
     firstname: string,
     lastname: string,
     email: string,
-    password: string,
-    points:number
+    encryptedPassword: string,
+    role: string
 }

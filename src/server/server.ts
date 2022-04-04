@@ -1,14 +1,15 @@
-import express from "express";
-import cors from "cors";
-import path from "path";
-import { PostModel } from "./schemas/post.schema.js";
-import { UserModel } from "./schemas/user.schema.js";
-import { OrderItemModel } from "./schemas/orderItems.schema.js";
-import { OrdersModel } from "./schemas/orders.schema.js";
-import { MenuItemModel } from "./schemas/menuItems.schema.js";
-import { CategoryModel } from "./schemas/category.schema.js";
-import { IngredientsModel } from "./schemas/ingredients.schema.js";
-import mongoose from "mongoose";
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import { PostModel } from './schemas/post.schema.js';
+import { AdminModel } from './schemas/admin.schema.js';
+import { UserModel } from './schemas/user.schema.js';
+import { OrderItemModel } from './schemas/orderItems.schema.js';
+import { OrdersModel } from './schemas/orders.schema.js';
+import { MenuItemModel } from './schemas/menuItems.schema.js';
+import { CategoryModel } from './schemas/category.schema.js';
+import { IngredientsModel } from './schemas/ingredients.schema.js';
+import mongoose from 'mongoose';
 import Stripe from "stripe";
 import AdminJSExpress from "@adminjs/express";
 import AdminJS from "adminjs";
@@ -22,87 +23,83 @@ const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
 
-const run = async () => {
-  //Moved mongoose connection inside of this for adminJS to use
-  const connection = await mongoose.connect(
-    "mongodb://localhost:27017/restaurant"
-  );
+const run = async() => {
+    //Moved mongoose connection inside of this for adminJS to use
+    const connection = await mongoose.connect('mongodb://localhost:27017/restaurant')
 
-  const AdminJSOptions = new AdminJS({
-    resources: [
-      {
-        resource: UserModel,
-        options: {
-          properties: {
-            encryptedPassword: {
-              isVisible: false,
-            },
-            password: {
-              type: "string",
-              isVisible: {
-                list: false,
-                edit: true,
-                filter: false,
-                show: false,
-              },
-            },
-          },
-          actions: {
-            new: {
-              before: async (req: any) => {
-                if (req.payload.password) {
-                  req.payload = {
-                    ...req.payload,
-                    encryptedPassword: await bcrypt.hash(
-                      req.payload.password,
-                      10
-                    ),
-                    password: undefined,
-                  };
+    
+    
+
+    const AdminJSOptions = new AdminJS({
+        resources: [{
+            resource: AdminModel,
+            options: {
+                properties: {
+                    encryptedPassword: {
+                        isVisible: false,
+                    },
+                    password: {
+                        type: 'string',
+                        isVisible: {
+                            list: false, edit: true, filter: false, show: false
+                        },
+                    },
+                },
+                actions: {
+                    new: {
+                        before: async (req: any) => {
+                            if(req.payload.password) {
+                                req.payload = {
+                                    ...req.payload,
+                                    encryptedPassword: await bcrypt.hash(req.payload.password, 10),
+                                    password: undefined,
+                                }
+                            }
+                            return req
+                        },
+                    }
                 }
-                return req;
               },
+            },{
+              resource: MenuItemModel,
+              features: [
+                uploadFeature({
+                  provider: { local: { bucket: "public" } },
+                  properties: {
+                    key: "userKey",
+                    file: "file upload",
+                    filesToDelete: "userFilesToDelete",
+                    filePath: 'menu',
+                    bucket: undefined,
+                    mimeType: undefined,
+                    size: undefined,
+                    filename: undefined,
+                  },
+                }),
+              ],
             },
+            CategoryModel,
+            IngredientsModel,
+          ],
+          rootPath: "/admin",
+          //branding is the look of adminjs so i changed our company names, removed a logo, and added our 'logo'
+          branding: {
+            companyName: "SAM Restaurant",
+            softwareBrothers: false,
+            logo: "https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/branding/panera-bread-logo-no-mother-bread.svg",
           },
-        },
-      },
-      {
-        resource: MenuItemModel,
-        features: [
-          uploadFeature({
-            provider: { local: { bucket: "public" } },
-            properties: {
-              key: "userKey",
-              file: "file upload",
-              filesToDelete: "userFilesToDelete",
-              filePath: 'menu',
-              bucket: undefined,
-              mimeType: undefined,
-              size: undefined,
-              filename: undefined,
-            },
-          }),
-        ],
-      },
-      CategoryModel,
-      IngredientsModel,
-    ],
-    rootPath: "/admin",
-    //branding is the look of adminjs so i changed our company names, removed a logo, and added our 'logo'
-    branding: {
-      companyName: "SAM Restaurant",
-      softwareBrothers: false,
-      logo: "https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/branding/panera-bread-logo-no-mother-bread.svg",
-    },
-  });
+        });
+          
+        
+      
   //creates an adminJS autheticated router to actually check user login
   const router = AdminJSExpress.buildAuthenticatedRouter(AdminJSOptions, {
     authenticate: async (email, password) => {
-      const user = await UserModel.findOne({ email });
-      if (user) {
-        const matched = await bcrypt.compare(password, user.encryptedPassword);
+      const admin = await AdminModel.findOne({ email });
+      if (admin) {
+        const matched = await bcrypt.compare(password, admin.encryptedPassword);
         if (matched) {
-          return user;
+          return admin;
         }
       }
       return false;
