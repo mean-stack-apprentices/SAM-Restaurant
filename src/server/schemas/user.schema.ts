@@ -1,14 +1,13 @@
 import mongoose from 'mongoose';
-import type { User } from '../../shared/models/user.model';
+import { User } from '../../shared/models/user.model.js';
 const {Schema, model} = mongoose
 
-const userSchema = new Schema<User>({
+const UserSchema = new Schema<User>({
     firstname: {type: String, required: true},
     lastname: {type: String, required: true},
     email: {type: String, required: true },
-    encryptedPassword: {type: String, required: true },
-    points:{type: String, required: true},
-    role: {type: String, enum: ['admin', 'restricted'], required: true}
+    password: {type: String, required: true},
+    points: {type: Number, required: true, default: 0}
 })
 
-export const UserModel = model<User>('User',userSchema)
+export const UserModel = model<User>('User',UserSchema)
