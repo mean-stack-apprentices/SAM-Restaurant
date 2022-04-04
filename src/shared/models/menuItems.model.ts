@@ -9,10 +9,8 @@ export interface MenuItems {
     description: string,
     image: string,
     images: string[],
-    category: [
-        { category: Category }] 
-    ingredients: [
-        { ingredients:Ingredients }],
+    category: [] 
+    ingredients: [],
     isFeatured :Boolean
     
 }

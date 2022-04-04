@@ -20,3 +20,44 @@ li {
   padding: 5px;
   list-style: none;
 }
+
+#drower {
+  transition: height 1s ease-in-out;
+  overflow: hidden;
+}
+.closed {
+display: none;
+}
+.open
+{
+  position: fixed;
+   top: 100px;
+  // left: 0;
+  width: 40%;
+  height: 50vh;
+  background-color: white;
+  // z-index: 5; // you need change the z-index and make this layer behind you dropdown list.
+}
+
+.icons{
+  height: 35px;
+  padding-right: 35px;
+}
+
+.menuRapper{
+  display: flex;
+  padding-left: 50px;
+  border-bottom: 1px solid lightgray;
+  color: gray;
+
+}
+.menuRapper:hover
+{
+border-bottom: 1px solid #000;
+}
+.menuHeader {
+  color: gray;
+  h1 {
+    color: rgb(102, 129, 102);
+  }
+}

@@ -13,13 +13,13 @@ import { MenuItems } from '../../../../../shared/models/menuItems.model';
 })
 export class MenuListComponent implements OnInit {
   menuItems$:Observable< MenuItems[]>
-  // category$: Observable<Category[]>
-  categories: Category[] = [];
+
+
 
   constructor
   (private router: Router,
   private menuItemService: MenuItemsService,
-  private categoryService: CategoryService
+
     ) {
      this.menuItems$= this.menuItemService.getMenuItems()
 
@@ -29,5 +29,5 @@ export class MenuListComponent implements OnInit {
   }
 
 
-  
+
 }
