@@ -22,6 +22,7 @@ AdminJS.registerAdapter(AdminJSMongoose);
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
+const saltRounds = 10;
 
 const run = async() => {
     //Moved mongoose connection inside of this for adminJS to use
