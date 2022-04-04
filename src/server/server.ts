@@ -193,23 +193,27 @@ app.get("/ingredients", function (req, res) {
 });
 app.post("/create-user", function (req, res) {
   const { firstname, email, lastname, password, points } = req.body;
-  const user = new UserModel({
-    firstname,
-    lastname,
-    email,
-    password,
-    points,
-  });
-  user
-    .save()
-    .then((data) => {
-      res.json({ data });
+  bcrypt.genSalt(saltRounds, function(err: any, salt: number | string) {
+    bcrypt.hash(password, salt, async function(err, hash) {
+      const user = new UserModel({
+        firstname,
+        lastname,
+        email,
+        password: hash,
+        points
+      })
+      user
+      .save()
+      .then((data: any) => {
+        res.json({ data });
+      })
+      .catch((err: any) => {
+        res.status(501);
+        res.json({ errors: err });
+      });
     })
-    .catch((err) => {
-      res.status(501);
-      res.json({ errors: err });
-    });
-});
+  })
+})
 
 app.get("/orders", function (req, res) {
   OrdersModel.find(req.body.user._id)
