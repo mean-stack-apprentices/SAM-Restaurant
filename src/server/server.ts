@@ -16,6 +16,7 @@ import AdminJS from "adminjs";
 import AdminJSMongoose from "@adminjs/mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv"
 import uploadFeature from "@adminjs/upload";
 //Registers adapter to allow adminJs to connect to mongoose
 AdminJS.registerAdapter(AdminJSMongoose);
