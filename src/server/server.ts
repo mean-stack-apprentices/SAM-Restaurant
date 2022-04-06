@@ -25,6 +25,8 @@ const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
 const saltRounds = 10;
+dotenv.config()
+const access_secret = process.env.ACCESS_TOKEN_SECRET as string;
 
 const run = async() => {
     //Moved mongoose connection inside of this for adminJS to use
