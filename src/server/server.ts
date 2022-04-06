@@ -230,11 +230,14 @@ app.post("/login", function (req, res) {
           httpOnly: true,
           maxAge: 60 * 5 * 1000,
         });
-        res.json({data: user })
+        res.json({message: 'Successfully logged in'})
       } else {
         res.sendStatus(502)
       }
     })
+  })
+  .catch((err) => {
+    return res.sendStatus(404);
   })
 })
 
