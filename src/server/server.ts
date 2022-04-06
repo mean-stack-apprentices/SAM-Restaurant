@@ -15,6 +15,7 @@ import AdminJSExpress from "@adminjs/express";
 import AdminJS from "adminjs";
 import AdminJSMongoose from "@adminjs/mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import uploadFeature from "@adminjs/upload";
 //Registers adapter to allow adminJs to connect to mongoose
 AdminJS.registerAdapter(AdminJSMongoose);
@@ -211,6 +212,25 @@ app.post("/create-user", function (req, res) {
         res.status(501);
         res.json({ errors: err });
       });
+    })
+  })
+})
+
+app.post("/login", function (req, res) {
+  const { email, password } = req.body;
+
+  UserModel.findOne({ email }).then((user) => {
+    bcrypt.compare(password, `${user?.password}`, function(err, result) {
+      if(result) {
+        const accessToken = jwt.sign({ user }, access_secret);
+        res.cookie("jwt", accessToken, {
+          httpOnly: true,
+          maxAge: 60 * 5 * 1000,
+        });
+        res.json({data: user })
+      } else {
+        res.sendStatus(502)
+      }
     })
   })
 })
