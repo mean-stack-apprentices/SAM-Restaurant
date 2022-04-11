@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { timingSafeEqual } from 'crypto';
+import { Observable } from 'rxjs';
+import { CategoryService } from 'src/app/services/category.service';
+import { Category } from '../../../../../shared/models/category.model';
 
 // import { MatMenuTrigger } from '@angular/material/menu/matMenu';
 
@@ -12,16 +16,25 @@ import { Router } from '@angular/router';
 
 
 export class HeaderComponent implements OnInit {
-  // @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
-  // someMethod() {
-  //   this.trigger.openMenu();
-  // }
-  constructor(private router: Router) { }
+  category$: Observable<Category[]>
+  isOpen= false
+  constructor(private router: Router,
+    private categoryService: CategoryService,
+
+    ) {
+      this.category$ = this.categoryService.getCategories()
+
+    }
 
   ngOnInit(): void {
   }
   menu() {
-    this.router.navigate(['menu'])
+    this.router.navigate(['pizza'])
   }
+toggleIsOpen(){
+  this.isOpen = !this.isOpen
+}
+
+
 
 }

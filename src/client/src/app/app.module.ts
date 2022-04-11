@@ -18,6 +18,7 @@ import { HeaderComponent } from './pages/header/header.component';
 import { MenuListComponent } from './pages/menu-list/menu-list.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NavigationComponent } from './pages/navigation/navigation.component';
+import { CategoryComponent } from './pages/category/category.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { NavigationComponent } from './pages/navigation/navigation.component';
     HeaderComponent,
     MenuListComponent,
     HomeComponent,
-    NavigationComponent
+    NavigationComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
