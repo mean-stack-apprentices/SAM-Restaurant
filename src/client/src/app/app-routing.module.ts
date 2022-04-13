@@ -10,7 +10,8 @@ import { PageUsersComponent } from './pages/page-users/page-users.component';
 const routes: Routes = [
   {path: 'users', component: PageUsersComponent},
   {path:'pizza', component:MenuListComponent},
-  {path:'categories', component:CategoryComponent},
+  {path:'menu', component:MenuListComponent},
+{path:'menu/:category', component:MenuListComponent},
   {path:'',component:HomeComponent}
 
 ];

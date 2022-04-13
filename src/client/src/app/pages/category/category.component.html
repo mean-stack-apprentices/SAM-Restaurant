@@ -1,10 +1,10 @@
-<p>category works!</p>
-<ng-container *ngFor="let category of category$ | async">
-
-  <select >
-    <option value="category.name" >{{category.name}}</option>
 
 
-  </select>
+  <div *ngFor="let category of category$ | async" class="container">
+    <a [routerLink]=" 'menu/' + category._id"> <span><img class="icons" src="{{ category.icon }}" alt="image" /><p>{{category.name}}</p></span>
 
-  </ng-container>
+
+
+    </a>
+
+    </div>

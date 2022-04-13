@@ -7,34 +7,23 @@ import { Category } from '../../../../../shared/models/category.model';
 
 // import { MatMenuTrigger } from '@angular/material/menu/matMenu';
 
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
-
-
 export class HeaderComponent implements OnInit {
-  category$: Observable<Category[]>
-  isOpen= false
-  constructor(private router: Router,
-    private categoryService: CategoryService,
-
-    ) {
-      this.category$ = this.categoryService.getCategories()
-
-    }
-
-  ngOnInit(): void {
+  category$: Observable<Category[]>;
+  isOpen = false;
+  constructor(public router: Router, private categoryService: CategoryService) {
+    this.category$ = this.categoryService.getCategories();
   }
+
+  ngOnInit(): void {}
   menu() {
-    this.router.navigate(['pizza'])
+    this.router.navigate(['menu']);
   }
-toggleIsOpen(){
-  this.isOpen = !this.isOpen
-}
-
-
-
+  toggleIsOpen() {
+    this.isOpen = !this.isOpen;
+  }
 }
