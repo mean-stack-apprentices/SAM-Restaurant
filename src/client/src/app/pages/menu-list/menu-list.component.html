@@ -1,11 +1,18 @@
-<div *ngFor="let item of menuItems$ | async">
-{{item.name}}
-{{item.category}}
-<img src={{item.image}} alt="">
-{{item.description}}
+
+
+<div *ngIf=" menuItemService.menuItems as menu" class="product " id="container">
+<div *ngFor="let item of menu" class="card">
+  <div class="product_row">
+    <img src="{{item.image}}" alt="image">
+    <p class="product_name">{{item.name}}</p>
+    <div class="custom">
+    <button class="addButton">Add to Cart</button>
+    <p>Custrmize</p>
+  </div>
+  </div>
+
 
 </div>
-
-
+</div>
 
 
