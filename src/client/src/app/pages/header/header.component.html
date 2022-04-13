@@ -1,45 +1,47 @@
-
 <div class="container">
-  <div >
+  <div>
     <ul>
-
-      <li >
-
-        <span (click)="toggleIsOpen()" >Our Menu
-          <span id="drower" class="bg-secondary" [ngClass]="{closed: !isOpen, open: isOpen}">
+      <li>
+        <span class="ourmenu" (click)="toggleIsOpen()"
+          >Our Menu
+          <span
+            id="drower"
+            class="bg-secondary"
+            [ngClass]="{ closed: !isOpen, open: isOpen }"
+          >
             <div class="hideSlide">
               <div class="menuHeader">
                 <h1>Menu</h1>
                 <p>BROWSE BY CATEGORY</p>
               </div>
-              <div class="menuRapper" *ngFor="let category of category$ | async" (click)="menu()">
-         <img class="icons" src={{category.icon}} alt="">
-                   <p>{{category.name}}</p>
+
+              <div>
+                <app-category></app-category>
               </div>
             </div>
-
+          </span>
         </span>
-        </span>
-
-
-    </li>
+      </li>
       <li><a routerLink="">Locations</a></li>
-      <li> <a routerLink="" class="">Gift Cards</a></li>
+      <li><a routerLink="" class="">Gift Cards</a></li>
       <li><a routerLink="" class="">Subscription</a></li>
       <li><a routerLink="" class="">Catering</a></li>
       <li><a routerLink="" class="">Value</a></li>
     </ul>
   </div>
-<div>
- <span >
-  <img class="logo" src="https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/branding/panera-bread-logo-no-mother-bread.svg" alt="">
- </span>
-</div>
+  <div>
+    <span>
+      <img
+        class="logo"
+        src="https://www.panerabread.com/content/dam/panerabread/menu-omni/integrated-web/branding/panera-bread-logo-no-mother-bread.svg"
+        alt=""
+      />
+    </span>
+  </div>
   <div>
     <ul>
       <li>
         <a routerLink="" class="">Sign in or join my panera</a>
-
       </li>
       <li><a routerLink="" class="">start order</a></li>
       <li>
@@ -48,8 +50,6 @@
     </ul>
   </div>
 </div>
+<div class="new">
 
-
-<div>
-  <img src="https://www.panerabread.com/content/dam/panerabread/integrated-web-content/content/supporting-assets/meatless-you-pick-two-hero.jpg.transform/home-hero/image.20220301.jpeg" alt="">
 </div>
