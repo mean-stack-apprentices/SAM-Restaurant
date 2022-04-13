@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { CategoryService } from 'src/app/services/category.service';
 import { MenuItemsService } from 'src/app/services/menu-items.service';
 import { Category } from '../../../../../shared/models/category.model';
@@ -12,21 +13,27 @@ import { MenuItems } from '../../../../../shared/models/menuItems.model';
   styleUrls: ['./menu-list.component.scss']
 })
 export class MenuListComponent implements OnInit {
-  menuItems$:Observable< MenuItems[]>
-
+  menuItems$!:Observable< MenuItems[]>;
+menuItems:MenuItems[]= [];
+category$: Observable<Category[]>
 
 
   constructor
-  (private router: Router,
-  private menuItemService: MenuItemsService,
-
+  (public router: ActivatedRoute,
+  public menuItemService: MenuItemsService,
+  private categoryService: CategoryService
     ) {
-     this.menuItems$= this.menuItemService.getMenuItems()
+      this.category$ = this.categoryService.getCategories();
+     this.router.paramMap.subscribe(route => {
+      console.log(route.get('category'));
+  this.menuItemService.getMenuItems(route.get('category')).pipe(tap(data => this.menuItems = data)).subscribe(data => console.log(data))
+    });
 
      }
 
   ngOnInit(): void {
   }
+
 
 
 

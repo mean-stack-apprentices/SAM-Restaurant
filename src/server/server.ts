@@ -9,12 +9,14 @@ import { OrdersModel } from './schemas/orders.schema.js';
 import { MenuItemModel } from './schemas/menuItems.schema.js';
 import { CategoryModel } from './schemas/category.schema.js';
 import { IngredientsModel } from './schemas/ingredients.schema.js';
-import mongoose from 'mongoose';
+import mongoose, {ObjectId} from 'mongoose';
 import Stripe from "stripe";
 import AdminJSExpress from "@adminjs/express";
 import AdminJS from "adminjs";
 import AdminJSMongoose from "@adminjs/mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv"
 import uploadFeature from "@adminjs/upload";
 //Registers adapter to allow adminJs to connect to mongoose
 AdminJS.registerAdapter(AdminJSMongoose);
@@ -22,14 +24,15 @@ AdminJS.registerAdapter(AdminJSMongoose);
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
+const saltRounds = 10;
+dotenv.config()
+const access_secret = process.env.ACCESS_TOKEN_SECRET as string;
 
 const run = async() => {
     //Moved mongoose connection inside of this for adminJS to use
-    const connection = await mongoose.connect('mongodb://localhost:27017/restaurant')
+    const connection = await mongoose.connect("mongodb://localhost:27017/restaurant")
 
     
-    
-
     const AdminJSOptions = new AdminJS({
         resources: [{
             resource: AdminModel,
@@ -126,7 +129,6 @@ export const stripe = new Stripe(secret, {
 app.use('/public', express.static('public'))
 
 
-
 app.post("/create-payment", function (req, res) {
   stripe.charges
     .create({
@@ -165,13 +167,12 @@ app.get("/users", function (req, res) {
     });
 });
 
-app.get("/menu-items", function (req, res) {
-  MenuItemModel.find()
-    .then((data: any) => res.json({ data }))
-    .catch((err: any) => {
-      res.status(501);
-      res.json({ errors: err });
-    });
+app.get("/menu-items/:category", function (req, res) {
+  MenuItemModel.aggregate([
+    {$unwind:'$category'},
+    {$match:{'category':new mongoose.Types.ObjectId(req.params.category)}}
+  ]).exec().then(data => res.json({data}))
+   
 });
 
 app.get("/category", function (req, res) {
@@ -182,6 +183,8 @@ app.get("/category", function (req, res) {
       res.json({ errors: err });
     });
 });
+
+
 app.get("/ingredients", function (req, res) {
   IngredientsModel.find()
     .then((data: any) => res.json({ data }))
@@ -192,23 +195,49 @@ app.get("/ingredients", function (req, res) {
 });
 app.post("/create-user", function (req, res) {
   const { firstname, email, lastname, password, points } = req.body;
-  const user = new UserModel({
-    firstname,
-    lastname,
-    email,
-    password,
-    points,
-  });
-  user
-    .save()
-    .then((data) => {
-      res.json({ data });
+  bcrypt.genSalt(saltRounds, function(err: any, salt: number | string) {
+    bcrypt.hash(password, salt, async function(err, hash) {
+      const user = new UserModel({
+        firstname,
+        lastname,
+        email,
+        password: hash,
+        points
+      })
+      user
+      .save()
+      .then((data: any) => {
+        res.json({ data });
+      })
+      .catch((err: any) => {
+        res.status(501);
+        res.json({ errors: err });
+      });
     })
-    .catch((err) => {
-      res.status(501);
-      res.json({ errors: err });
-    });
-});
+  })
+})
+
+app.post("/login", function (req, res) {
+  const { email, password } = req.body;
+
+  UserModel.findOne({ email }).then((user) => {
+    bcrypt.compare(password, `${user?.password}`, function(err, result) {
+      if(result) {
+        const accessToken = jwt.sign({ user }, access_secret);
+        res.cookie("jwt", accessToken, {
+          httpOnly: true,
+          maxAge: 60 * 5 * 1000,
+        });
+        res.json({message: 'Successfully logged in'})
+      } else {
+        res.sendStatus(502)
+      }
+    })
+  })
+  .catch((err) => {
+    return res.sendStatus(404);
+  })
+})
 
 app.get("/orders", function (req, res) {
   OrdersModel.find(req.body.user._id)
