@@ -15,6 +15,8 @@ import AdminJSExpress from "@adminjs/express";
 import AdminJS from "adminjs";
 import AdminJSMongoose from "@adminjs/mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv"
 import uploadFeature from "@adminjs/upload";
 //Registers adapter to allow adminJs to connect to mongoose
 AdminJS.registerAdapter(AdminJSMongoose);
@@ -22,6 +24,9 @@ AdminJS.registerAdapter(AdminJSMongoose);
 const app = express();
 const __dirname = path.resolve();
 const PORT = 3501;
+const saltRounds = 10;
+dotenv.config()
+const access_secret = process.env.ACCESS_TOKEN_SECRET as string;
 
 const run = async() => {
     //Moved mongoose connection inside of this for adminJS to use
@@ -190,23 +195,49 @@ app.get("/ingredients", function (req, res) {
 });
 app.post("/create-user", function (req, res) {
   const { firstname, email, lastname, password, points } = req.body;
-  const user = new UserModel({
-    firstname,
-    lastname,
-    email,
-    password,
-    points,
-  });
-  user
-    .save()
-    .then((data) => {
-      res.json({ data });
+  bcrypt.genSalt(saltRounds, function(err: any, salt: number | string) {
+    bcrypt.hash(password, salt, async function(err, hash) {
+      const user = new UserModel({
+        firstname,
+        lastname,
+        email,
+        password: hash,
+        points
+      })
+      user
+      .save()
+      .then((data: any) => {
+        res.json({ data });
+      })
+      .catch((err: any) => {
+        res.status(501);
+        res.json({ errors: err });
+      });
     })
-    .catch((err) => {
-      res.status(501);
-      res.json({ errors: err });
-    });
-});
+  })
+})
+
+app.post("/login", function (req, res) {
+  const { email, password } = req.body;
+
+  UserModel.findOne({ email }).then((user) => {
+    bcrypt.compare(password, `${user?.password}`, function(err, result) {
+      if(result) {
+        const accessToken = jwt.sign({ user }, access_secret);
+        res.cookie("jwt", accessToken, {
+          httpOnly: true,
+          maxAge: 60 * 5 * 1000,
+        });
+        res.json({message: 'Successfully logged in'})
+      } else {
+        res.sendStatus(502)
+      }
+    })
+  })
+  .catch((err) => {
+    return res.sendStatus(404);
+  })
+})
 
 app.get("/orders", function (req, res) {
   OrdersModel.find(req.body.user._id)
