@@ -1,0 +1,25 @@
+
+
+img {
+height: 30px;
+margin-left: 20px;
+margin-right: 20px;
+padding-top: 10px;
+}
+
+.container{
+
+border-bottom: 1px solid lightgray;
+
+}
+.container:hover{
+  transform: scale(1.05);
+}
+
+span {
+  display: flex;
+  p {
+    text-decoration: none;
+    color: black;
+  }
+}

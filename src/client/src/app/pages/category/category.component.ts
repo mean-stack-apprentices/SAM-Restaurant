@@ -10,10 +10,12 @@ import { Category } from '../../../../../shared/models/category.model';
 })
 export class CategoryComponent implements OnInit {
   category$: Observable<Category[]>
+  // categories$:Observable<Category[]>
   constructor(
     private categoryService: CategoryService
   ) {
     this.category$ = this.categoryService.getCategories()
+    // this.categories$ = this.categoryService.GetCategories()
   }
 
   ngOnInit(): void {
