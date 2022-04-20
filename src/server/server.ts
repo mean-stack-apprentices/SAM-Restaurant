@@ -116,6 +116,8 @@ const run = async() => {
 
 run();
 
+mongoose.connect("mongodb://localhost:27017/restaurant")
+
 app.use(cors());
 app.use(express.json());
 
