@@ -1,0 +1,30 @@
+<div *ngIf="menuItems as item">
+  <div class="sideBar wrapper">
+    <div class="side">
+      <div class="namePriceWrapper">
+        <h1 class="name">{{ item.name }}</h1>
+        <p class="price">${{ item.price }}</p>
+        <button class="qty">Quantity</button> <br />
+        <button class="orderButton">Start an order</button>
+      </div>
+    </div>
+    <div><img class="mainImg" src="{{ item.image }}" alt="image" /></div>
+  </div>
+
+  <div class="container">
+    <div class="description">
+      <h4>About this</h4>
+      <p>
+        {{ item.description }}
+      </p>
+    </div>
+
+    <h4 class="ingredient">Ingredients</h4>
+    <div class="secondWrapper">
+      <div *ngFor="let ingredient of item.ingredients" class="imageWrapper">
+        <img class="ingredientImg" src="{{ ingredient.imgUrl }}" alt="image" />
+        <p>{{ ingredient.name }}</p>
+      </div>
+    </div>
+  </div>
+</div>
