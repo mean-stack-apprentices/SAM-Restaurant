@@ -7,9 +7,11 @@ import { HomeComponent } from './pages/home/home.component';
 import { IngredientComponent } from './pages/ingredient/ingredient.component';
 import { MenuListComponent } from './pages/menu-list/menu-list.component';
 import { PageUsersComponent } from './pages/page-users/page-users.component';
+import { UserLoginComponent } from './components/user-login/user-login.component';
 
 const routes: Routes = [
   {path: 'create-user', component: PageUsersComponent},
+  {path: 'login', component: UserLoginComponent},
   {path:'pizza', component:MenuListComponent},
   {path:'menu', component:MenuListComponent},
 {path:'menu/:category', component:MenuListComponent},
