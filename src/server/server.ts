@@ -171,9 +171,32 @@ app.get("/menu-items/:category", function (req, res) {
   MenuItemModel.aggregate([
     {$unwind:'$category'},
     {$match:{'category':new mongoose.Types.ObjectId(req.params.category)}}
-  ]).exec().then(data => res.json({data}))
-   
+  ]).exec()
+  .then(data => res.json({data}))
 });
+
+app.get("/:menuid/ingredients", function (req, res) {
+  console.log(req.params.menuid)
+MenuItemModel.findById(req.params.menuid)
+.populate('ingredients')
+  .then((data: any) => res.json({ data}))
+  .catch((err: any) => {
+    res.status(501);
+    res.json({ errors: err });
+  });
+});
+
+
+// app.get("/ingredients/:id", function (req, res) {
+//   console.log(req.params.id)
+// MenuItemModel.findById(req.params.id)
+// .populate('ingredients')
+//   .then((data: any) => res.json({ data:data.ingredients}))
+//   .catch((err: any) => {
+//     res.status(501);
+//     res.json({ errors: err });
+//   });
+// });
 
 app.get("/category", function (req, res) {
   CategoryModel.find()
@@ -185,14 +208,7 @@ app.get("/category", function (req, res) {
 });
 
 
-app.get("/ingredients", function (req, res) {
-  IngredientsModel.find()
-    .then((data: any) => res.json({ data }))
-    .catch((err: any) => {
-      res.status(501);
-      res.json({ errors: err });
-    });
-});
+
 app.post("/create-user", function (req, res) {
   const { firstname, email, lastname, password, points } = req.body;
   bcrypt.genSalt(saltRounds, function(err: any, salt: number | string) {
