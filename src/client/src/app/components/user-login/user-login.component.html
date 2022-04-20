@@ -1,0 +1,10 @@
+<div id="background">
+  <div id="container">
+      <div [formGroup]='signInForm' id="inputs">
+          <input class="input" type="text"  formControlName='username' placeholder="username"><br>
+          <input class="input" type="text" formControlName='password' placeholder="password"><br>
+          <button (click)="signIn()">Sign in</button>
+      </div>
+      <span>Don't have an account? <a routerLink="/create-user">Sign up!</a></span>
+  </div>
+</div>
