@@ -24,8 +24,8 @@ export class UserInputComponent implements OnInit, OnChanges {
   @Input() selectedUser: User | null = null;
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
     this.addUser = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
       email: [
         '',
         Validators.compose([Validators.required, Validators.minLength(3)]),
