@@ -8,7 +8,7 @@ import { MenuListComponent } from './pages/menu-list/menu-list.component';
 import { PageUsersComponent } from './pages/page-users/page-users.component';
 
 const routes: Routes = [
-  {path: 'users', component: PageUsersComponent},
+  {path: 'create-user', component: PageUsersComponent},
   {path:'pizza', component:MenuListComponent},
   {path:'menu', component:MenuListComponent},
 {path:'menu/:category', component:MenuListComponent},
