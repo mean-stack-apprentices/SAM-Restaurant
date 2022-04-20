@@ -21,6 +21,7 @@ import { NavigationComponent } from './pages/navigation/navigation.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { IngredientComponent } from './pages/ingredient/ingredient.component';
+import { UserLoginComponent } from './components/user-login/user-login.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { IngredientComponent } from './pages/ingredient/ingredient.component';
     NavigationComponent,
     CategoryComponent,
     FooterComponent,
-    IngredientComponent
+    IngredientComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,
