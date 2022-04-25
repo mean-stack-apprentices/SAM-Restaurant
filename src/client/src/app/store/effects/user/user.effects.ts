@@ -16,6 +16,12 @@ import {
   updateUser,
   updateUserFailure,
   updateUserSuccess,
+  loginUser,
+  loginUserFailure,
+  loginUserSuccess,
+  logoutUser,
+  logoutUserFailure,
+  logoutUserSuccess
 } from '../../actions/user/user.actions';
 
 @Injectable()
