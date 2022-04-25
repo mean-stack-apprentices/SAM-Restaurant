@@ -35,6 +35,12 @@ export const reducer = createReducer(
     const users = [...state.users];
     users.push(action.data);
     return {...state, users}
+  }),
+  on(loginUserSuccess, (state, action) => {
+    return {...state, loggedInUser: action.data}
+  }),
+  on(logoutUserSuccess, (state, action) => {
+    return {...state, selectedUser: null}
   })
 );
 
