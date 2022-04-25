@@ -26,6 +26,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
+import { IngredientComponent } from './pages/ingredient/ingredient.component';
+import { UserLoginComponent } from './components/user-login/user-login.component';
 
 @NgModule({
   declarations: [
@@ -39,9 +41,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NavigationComponent,
     CategoryComponent,
     FooterComponent,
-   
-  
-  
+    IngredientComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,

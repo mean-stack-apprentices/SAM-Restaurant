@@ -1,0 +1,14 @@
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 40px;
+}
+
+input {
+  margin: 30px;
+  height: 4vh;
+  width: 8vw;
+  border-bottom: 2px solid green;
+}
