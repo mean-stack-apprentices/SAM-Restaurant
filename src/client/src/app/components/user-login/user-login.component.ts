@@ -1,3 +1,4 @@
+import { loginUser } from './../../store/actions/user/user.actions';
 
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -30,7 +31,7 @@ export class UserLoginComponent implements OnInit {
 
   signIn() {
     console.log(this.signInForm.value)
-    // this.userService.login(this.signInForm.value).subscribe();
+   this.store.dispatch(loginUser({data: this.signInForm.value}))
     this.signInForm.reset();
   }
 
