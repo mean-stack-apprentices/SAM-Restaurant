@@ -20,6 +20,12 @@ import { HomeComponent } from './pages/home/home.component';
 import { NavigationComponent } from './pages/navigation/navigation.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { FooterComponent } from './pages/footer/footer.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
+
+
 import { IngredientComponent } from './pages/ingredient/ingredient.component';
 import { UserLoginComponent } from './components/user-login/user-login.component';
 
@@ -43,11 +49,13 @@ import { UserLoginComponent } from './components/user-login/user-login.component
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    CarouselModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
     EffectsModule.forRoot([UserEffects]),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

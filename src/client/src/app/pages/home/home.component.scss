@@ -1,0 +1,127 @@
+body{
+	line-height: 1.5;
+	font-family: calibre,Helvetica Neue,helvetica,arial,sans-serif;
+}
+*{
+	margin:0;
+	
+	box-sizing: border-box;
+}
+
+
+.container{
+ 
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+}
+.row {
+    object-fit: cover;
+    width: 100%;
+    font-family: "object-fit: cover;";
+   
+}
+.row{
+   
+    display: flex;
+    margin-top: 10px;
+    height: 100%;
+}
+// .row1 img:hover {
+//     transition: 0.3s ease-in-out;
+//     transform: scale(1.1);
+//   }
+  
+
+.card img {
+    margin-bottom: 10px;
+    transition: 0.3s ease-in-out;
+    padding: 12px;
+    display: flex;
+    top: 50%;
+    left: 50%;
+}
+  .card a{
+    color:white;
+    background: #4c753f;
+    bottom: -100%;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  
+  .card img:hover {
+    transition: 0.3s ease-in-out;
+    transform: scale(1.1);
+  }
+
+  .col-md {
+    color:white;
+      background: #4c753f;
+      bottom: -100%;
+   
+    
+  }
+  .rto-label {
+    color:white;
+      background: #4c753f;
+      // bottom: -110%;
+      align-items: center;
+      flex-grow: 1;
+      text-decoration: none;
+  }
+  .rto-label {
+    color:white;
+      background: #4c753f;
+      align-items: center;
+      flex-grow: 1;
+      text-decoration: none;
+  }
+  
+     .wrapper {
+      max-width: 80rem;
+      display: flex;
+      padding-left: 300px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      font-size: 16px;
+    
+      }
+    
+  .row1{
+    display: flex;
+    // margin-top: 30px;
+    height: 100%;
+    // margin-top:20px ;
+    padding: 200;
+   
+  
+  }
+  .row2{
+    display: flex;
+    // margin-top: 30px;
+    height: 100%;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding: 6rem;
+    padding-left: 200px;
+   
+   
+  }
+
+  h4{
+    text-align: center;
+    color: #6f6f75;
+    font-weight: 400;
+    padding-right: 10px;
+    font-family: "object-fit: cover;";
+  }
+   p{
+     text-align: center;
+     color: #6f6f75;
+     font-weight: 400;
+     font-size: 15px;
+  
+  }
+   
