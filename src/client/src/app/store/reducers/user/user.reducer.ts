@@ -8,12 +8,14 @@ export const userFeatureKey = 'user';
 export interface State {
   users: User[];
   selectedUser: User | null;
+  loggedInUser: User | null;
 
 }
 
 export const initialState: State = {
   users: [],
   selectedUser: null,
+  loggedInUser: null
 };
 
 
