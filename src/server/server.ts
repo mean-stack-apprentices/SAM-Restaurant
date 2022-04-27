@@ -18,6 +18,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv"
 import uploadFeature from "@adminjs/upload";
+import { CartModel } from './schemas/cart.schema.js';
 //Registers adapter to allow adminJs to connect to mongoose
 AdminJS.registerAdapter(AdminJSMongoose);
 
@@ -130,7 +131,6 @@ export const stripe = new Stripe(secret, {
 
 app.use('/public', express.static('public'))
 
-
 app.post("/create-payment", function (req, res) {
   stripe.charges
     .create({
@@ -223,18 +223,35 @@ app.post("/create-user", function (req, res) {
         points
       })
       user
-      .save()
-      .then((data: any) => {
-        res.json({ data });
-      })
-      .catch((err: any) => {
-        res.status(501);
-        res.json({ errors: err });
-      });
-    })
-  })
-})
+        .save()
+        .then((data) => {
+          res.json({ data });
+        })
+        .then(() => {
+          const cart = new CartModel({
+            user: user._id,
+          });
+          cart
+          .save()
+        })
+        .catch((err) => {
+          res.status(501);
+          res.json({ errors: err });
+        });
+    });
+  });
+});
 
+
+app.get("/cart", function (req: any, res) {
+  CartModel.findOne({ user: req.user._id })
+    .populate("user items.menuItems")
+    .then((data) => res.json({ data }))
+    .catch((err) => {
+      res.status(501);
+      res.json({ errors: err });
+    });
+})
 app.post("/login", function (req, res) {
   const { email, password } = req.body;
 
