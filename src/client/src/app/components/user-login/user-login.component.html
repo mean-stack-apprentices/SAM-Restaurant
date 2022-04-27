@@ -1,9 +1,12 @@
 <div id="background">
   <div id="container">
+    <h1>Sign In to MyPanera</h1>
       <div [formGroup]='signInForm' id="inputs">
           <input class="input" type="text"  formControlName='email' placeholder="email"><br>
           <input class="input" type="text" formControlName='password' placeholder="password"><br>
-          <button (click)="signIn()">Sign in</button>
+        
+          <button class="button" (click)="signIn()">Sign in</button>
+          
       </div>
       <span>Don't have an account? <a routerLink="/create-user">Sign up!</a></span>
   </div>
