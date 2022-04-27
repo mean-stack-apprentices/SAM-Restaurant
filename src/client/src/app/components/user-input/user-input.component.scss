@@ -7,8 +7,18 @@ form {
 }
 
 input {
-  margin: 30px;
+  margin: 12px;
   height: 4vh;
-  width: 8vw;
+  width: 20vw;
   border-bottom: 2px solid green;
+}
+button {
+  background: #4c753f;
+  color: #fff;
+  padding-left: 15px;
+  min-width: 26rem;
+  font-size: 16px;
+}
+form h1{
+  font-size: 26px;
 }

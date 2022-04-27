@@ -1,0 +1,34 @@
+*{
+	margin:0;
+	
+	box-sizing: border-box;
+}
+
+#background{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 40px;
+}
+#container a{
+    font-size:13px;
+
+}
+
+.input {
+    margin: 15px;
+    height: 4vh;
+    width: 20vw;
+    border-bottom: 2px solid green;
+    // color:white;
+  }
+ .button{
+    margin-right: 19px;
+    margin-left: 13px;
+    background: #4c753f;
+    color: #fff;
+    padding-left: 15px;
+    min-width: 26rem;
+    font-size: 16px;
+ }
