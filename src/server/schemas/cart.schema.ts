@@ -1,10 +1,10 @@
-import { MenuItems } from './../../shared/models/menuItems.model';
 import mongoose from 'mongoose';
-import { Cart } from './../../shared/models/cart.model.js';
+import { MenuItems } from '../../shared/models/menuItems.model.js';
+import { Cart } from '../../shared/models/cart.model.js';
 
 const {Schema, model} = mongoose
 
-const cartSchema = new mongoose.Schema<Cart>({
+const cartSchema = new Schema<Cart>({
     user: { type: mongoose.Types.ObjectId, ref: 'User' },
     items: [{
         menuItems: { type: mongoose.Types.ObjectId, ref: 'MenuItems' },
