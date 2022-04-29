@@ -8,27 +8,30 @@ margin-top: -20px;
 .container {
   display: flex;
   height: 70px;
-  font-family:Arial;
+  font-size: 14px;
 
 }
-// .new {
-//   background-color: hsl(0, 24%, 96%);
-//   height: 50px;
-//   width: 100%;
-// }
+
 ul
 {
   display: flex;
+  list-style: none;
 
 }
 li {
-  padding: 5px;
-  list-style: none;
+  padding: 7px;
+
+
+}
+a {
+  text-decoration: none;
+  color: #000;
 }
 
 #drower {
   transition: height 1s ease-in-out;
   overflow: hidden;
+  background-color: white;
 }
 .closed {
 display: none;
@@ -39,7 +42,7 @@ display: none;
    top: 100px;
   width: 40%;
   height: 50vh;
-  background-color: white;
+
 }
 
 .icons{
@@ -59,15 +62,12 @@ display: none;
 border-bottom: 1px solid #000;
 }
 .menuHeader {
-  color: gray;
   h1 {
     color: rgb(102, 129, 102);
   }
 }
 .ourmenu {
 cursor: pointer;
+
 }
-h1
- {
-  cursor: pointer;
- }
+
