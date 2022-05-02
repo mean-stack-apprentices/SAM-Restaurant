@@ -65,3 +65,31 @@ export const deleteUserFailure = createAction(
   '[User] Delete User Failure',
   props<{ error: Error }>()
 );
+
+export const loginUser = createAction(
+  '[User] Login User',
+  props<{ data: User }>()
+)
+
+export const loginUserFailure = createAction(
+  '[User] Login User Failure',
+  props<{ error: Error}>()
+)
+
+export const loginUserSuccess = createAction(
+  '[User] Login User Success',
+  props<{ data: User}>()
+)
+
+export const logoutUser = createAction(
+  '[User] Logout User'
+)
+
+export const logoutUserSuccess = createAction(
+  '[User] Logout User Success'
+)
+
+export const logoutUserFailure = createAction(
+  '[User] Logout User Failure',
+  props<{error: Error}>()
+)

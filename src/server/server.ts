@@ -274,6 +274,14 @@ app.post("/login", function (req, res) {
   })
 })
 
+app.get('/logout', function(req, res) {
+  res.cookie('jwt', '', {
+    httpOnly: true,
+    maxAge: 0
+  })
+  res.json({message: 'Successfully logged out!'})
+})
+
 app.get("/orders", function (req, res) {
   OrdersModel.find(req.body.user._id)
     .then((data: any) => res.json({ data }))

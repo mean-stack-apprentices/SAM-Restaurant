@@ -14,5 +14,10 @@ export const selectedUserSelector = createSelector(
   (state) => state.selectedUser
 )
 
+export const loggedInUserSelector = createSelector(
+  userFeatureSelector,
+  (state) => state.loggedInUser
+)
+
 
 
