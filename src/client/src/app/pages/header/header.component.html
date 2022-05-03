@@ -38,11 +38,10 @@
       />
     </span>
   </div>
-  <div>
+  <div *ngIf="loggedInUser$ | async; else elseTemplate">
     <ul>
       <li>
-        <a routerLink="login" class="">Sign in or join my panera</a>
-
+        <a routerLink="user" class="">User Profile</a>
       </li>
       <li><a routerLink="" class="">start order</a></li>
       <li>
@@ -50,7 +49,34 @@
       </li>
     </ul>
   </div>
+  <ng-template #elseTemplate>
+    <ul>
+      <li>
+        <a routerLink="login">Sign In or Join MyPanera</a>
+      </li>
+      <li>
+        <a routerLink="" >start order</a>
+      </li>
+      <li>
+        <a routerLink="" class="">search our menu</a>
+      </li>
+    </ul>
+  </ng-template>
 </div>
 <div class="new">
 
 </div>
+
+<!-- <nav *ngIf="!loggedInUser$ ; else elseTemplate">
+  <a routerLink="/">Home</a>
+  <a routerLink="/translations">Translations</a>
+</nav>
+
+ <ng-template #elseTemplate>
+  <nav>
+  <a routerLink="/">Home</a>
+  <a routerLink="/translations">Translations</a>
+  <a class="rightSide" routerLink="/signup">Sign Up</a>
+<a class="rightSide" routerLink="/login">Login</a>
+</nav>
+</ng-template> -->
