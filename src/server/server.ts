@@ -263,7 +263,7 @@ app.post("/login", function (req, res) {
           httpOnly: true,
           maxAge: 60 * 5 * 1000,
         });
-        res.json({message: 'Successfully logged in'})
+        res.json({data: user})
       } else {
         res.sendStatus(502)
       }
