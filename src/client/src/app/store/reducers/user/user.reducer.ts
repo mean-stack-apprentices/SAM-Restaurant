@@ -39,10 +39,11 @@ export const reducer = createReducer(
     return {...state, users}
   }),
   on(loginUserSuccess, (state, action) => {
+
     return {...state, loggedInUser: action.data}
   }),
   on(logoutUserSuccess, (state, action) => {
-    return {...state, selectedUser: null}
+    return {...state, loggedInUser: null}
   })
 );
 
