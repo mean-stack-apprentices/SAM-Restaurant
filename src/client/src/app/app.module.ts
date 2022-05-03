@@ -26,6 +26,7 @@ import { IngredientComponent } from './pages/ingredient/ingredient.component';
 import { UserLoginComponent } from './components/user-login/user-login.component';
 import * as fromCart from './store/reducers/cart/cart.reducer';
 import * as fromMenuItem from './store/reducers/menu-item/menu-item.reducer';
+import { CartComponent } from './pages/cart/cart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +38,7 @@ import * as fromMenuItem from './store/reducers/menu-item/menu-item.reducer';
     HomeComponent,
     NavigationComponent,
     CategoryComponent,
+    CartComponent,
     FooterComponent,
     IngredientComponent,
     UserLoginComponent
