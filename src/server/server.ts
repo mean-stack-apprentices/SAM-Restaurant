@@ -178,7 +178,6 @@ app.get("/menu-items/:category", function (req, res) {
 });
 
 app.get("/:menuid/ingredients", function (req, res) {
-  console.log(req.params.menuid)
 MenuItemModel.findById(req.params.menuid)
 .populate('ingredients')
   .then((data: any) => res.json({ data}))
@@ -188,17 +187,36 @@ MenuItemModel.findById(req.params.menuid)
   });
 });
 
-
-// app.get("/ingredients/:id", function (req, res) {
-//   console.log(req.params.id)
-// MenuItemModel.findById(req.params.id)
-// .populate('ingredients')
-//   .then((data: any) => res.json({ data:data.ingredients}))
-//   .catch((err: any) => {
-//     res.status(501);
-//     res.json({ errors: err });
-//   });
-// });
+// app.get("/:cartid/cart", function (req: any, res) {
+//   console.log(req.params.cartid)
+//   CartModel.findById(req.params.cartid)
+//     .populate("user items.menuItems")
+//     .then((data: any) => res.json({ data}))
+//     .catch((err: any) => {
+//       res.status(501);
+//       res.json({ errors: err });
+//     });
+// })
+app.put("/delete-from-cart/id", function (req: any, res) {
+  console.log("Delete product from cart");
+  CartModel.findOneAndUpdate(
+    { user: req.user._id },
+    {
+      $pull: { items: { menuItems: req.params.id } },
+    },
+    {
+      new: true,
+    },
+    function (err, deleteFromCart) {
+      if (err) {
+        res.send("Error deleting product from cart");
+      } else {
+        res.json(deleteFromCart);
+        console.log("deleted prodct", deleteFromCart);
+      }
+    }
+  ).populate("items.product");
+});
 
 app.get("/category", function (req, res) {
   CategoryModel.find()
@@ -243,15 +261,7 @@ app.post("/create-user", function (req, res) {
 });
 
 
-app.get("/cart", function (req: any, res) {
-  CartModel.findOne({ user: req.user._id })
-    .populate("user items.menuItems")
-    .then((data) => res.json({ data }))
-    .catch((err) => {
-      res.status(501);
-      res.json({ errors: err });
-    });
-})
+
 app.post("/login", function (req, res) {
   const { email, password } = req.body;
 
