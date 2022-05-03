@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store';
-import { usersSelector, selectedUserSelector } from 'src/app/store/selectors/user/user.selectors';
+import { usersSelector, selectedUserSelector, loggedInUserSelector } from 'src/app/store/selectors/user/user.selectors';
 import { User } from '../../../../../shared/models/user.model';
 
 @Component({
@@ -13,11 +13,13 @@ import { User } from '../../../../../shared/models/user.model';
 export class PageUsersComponent implements OnInit {
   users$: Observable<User[]>;
   selectedUser$: Observable<User | null>;
+  loggedInUser$: Observable<User | null>;
   constructor(
     private store: Store<AppState>,
   ) {
     this.users$ = this.store.select(usersSelector);
     this.selectedUser$ = this.store.select(selectedUserSelector);
+    this.loggedInUser$ = this.store.select(loggedInUserSelector)
    }
 
   ngOnInit(): void {
