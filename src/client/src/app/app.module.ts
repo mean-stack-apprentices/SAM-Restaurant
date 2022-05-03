@@ -28,6 +28,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { IngredientComponent } from './pages/ingredient/ingredient.component';
 import { UserLoginComponent } from './components/user-login/user-login.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { UserLoginComponent } from './components/user-login/user-login.component
     CategoryComponent,
     FooterComponent,
     IngredientComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    UserProfileComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
