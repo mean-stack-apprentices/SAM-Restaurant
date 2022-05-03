@@ -81,7 +81,7 @@ export class UserEffects {
       mergeMap((action) =>
         this.userService.login(action.data).pipe(
           map((data) => loginUserSuccess({data})),
-          tap(() => this.router.navigate(['/'])),
+          tap(() => this.router.navigate(['/user'])),
           catchError((error) => of(loginUserFailure({error})))
         ))
     )
