@@ -8,7 +8,7 @@
       <p class="product_name">{{ item.name }}</p>
       <p>${{ item.price }}</p>
       <div class="custom">
-        <button class="addButton">Add to Cart</button>
+     <button (click)="addToCart(item)" class="addButton">Add to Cart</button>
         <p>Custrmize</p>
       </div>
     </div>
