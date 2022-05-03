@@ -1,3 +1,4 @@
+import { loggedInUserSelector } from './../../store/selectors/user/user.selectors';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -8,6 +9,7 @@ import { deleteUser, loadUsers, selectUserAction } from 'src/app/store/actions/u
 import { selectedUserSelector, usersSelector } from 'src/app/store/selectors/user/user.selectors';
 import { User } from '../../../../../shared/models/user.model';
 
+
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
@@ -15,6 +17,7 @@ import { User } from '../../../../../shared/models/user.model';
 })
 export class UsersListComponent implements OnInit {
 
+ loggedInUser: User | null = null;
   @Input() public users: User[] = [];
   @Input() public selectedUser: User | null = null;
 
@@ -22,7 +25,7 @@ export class UsersListComponent implements OnInit {
     private userService: UserService,
     private store: Store<AppState>,
     ) {
-
+     this.store.select(loggedInUserSelector).subscribe(data => this.loggedInUser = data)
 
   }
 
