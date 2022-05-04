@@ -21,7 +21,7 @@ cart:MenuItems[]=[]
   }
   deleteItemFromCart(product: MenuItems) {
     console.log('delete cart from cart', product)
-    return this.api.delete<Cart>('delete-cart/' +  product._id)
+    return this.api.delete<Cart>('delete-from-cart/' +  product._id)
   }
 
   deleteProductFromCart(c:MenuItems) {
