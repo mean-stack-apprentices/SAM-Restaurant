@@ -187,16 +187,40 @@ MenuItemModel.findById(req.params.menuid)
   });
 });
 
-// app.get("/:cartid/cart", function (req: any, res) {
-//   console.log(req.params.cartid)
-//   CartModel.findById(req.params.cartid)
-//     .populate("user items.menuItems")
-//     .then((data: any) => res.json({ data}))
-//     .catch((err: any) => {
-//       res.status(501);
-//       res.json({ errors: err });
-//     });
-// })
+app.get("/menuItems", function (req, res) {
+  MenuItemModel.find()
+    .then((data: any) => res.json({ data }))
+    .catch((err: any) => {
+      res.status(501);
+      res.json({ errors: err });
+    });
+});
+
+app.post("/create-menuItems", function (req, res) {
+  const { name,category, ingredients, isFeatured, title, price, image, description } = req.body;
+  const product = new MenuItemModel({
+    price,
+    title,
+    image,                        
+    description,
+   name, 
+   category,
+   ingredients,
+   isFeatured
+  });
+  product
+    .save()
+    .then((data: any) => {
+      res.json({ data });
+    })
+
+    .catch((err: any) => {
+      console.log(err);
+      res.status(501);
+      res.json({ errors: err });
+    });
+});
+
 app.put("/delete-from-cart/id", function (req: any, res) {
   console.log("Delete product from cart");
   CartModel.findOneAndUpdate(
