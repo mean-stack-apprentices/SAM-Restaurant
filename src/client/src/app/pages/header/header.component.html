@@ -47,14 +47,7 @@
       <li>
         <a routerLink="" class="">search our menu</a>
       </li>
-      <li *ngIf="cart as c" >
-        <a routerLink="/cart" class="cart">
-          {{c.length}}
-          <i style="font-size: 15px" class="fas fa-cart-plus"></i
-            ><span class="cart-text"></span>
-        </a>
 
-      </li>
     </ul>
   </div>
   <ng-template #elseTemplate>
@@ -67,6 +60,14 @@
       </li>
       <li>
         <a routerLink="" class="">search our menu</a>
+      </li>
+       <li *ngIf="cart as c" >
+        <a routerLink="/cart" class="cart">
+          {{c.length}}
+          <i style="font-size: 15px" class="fas fa-cart-plus"></i
+            ><span class="cart-text"></span>
+        </a>
+
       </li>
     </ul>
   </ng-template>
