@@ -26,4 +26,15 @@ export class MenuItemsService {
   get menuItems() {
     return this.MenuItems;
   }
+  createMenuItems(menuItems: MenuItems) {
+    console.log(menuItems);
+    return this.api
+      .post<{ data: MenuItems }>('create-menuItems', menuItems)
+      .pipe(map((res) => res.data));
+  }
+  getMenuitems() {
+    return this.api
+      .get<{ data: MenuItems[] }>('menuItems')
+      .pipe(map((res) => res.data));
+  }
 }
