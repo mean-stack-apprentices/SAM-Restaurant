@@ -1,0 +1,18 @@
+.infoContainer {
+  color: #657000;
+  border: 2px solid green;
+  background-color: #f9faf7;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 4px;
+}
+
+.header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: green;
+}

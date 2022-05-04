@@ -24,6 +24,9 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IngredientComponent } from './pages/ingredient/ingredient.component';
 import { UserLoginComponent } from './components/user-login/user-login.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+
 import * as fromCart from './store/reducers/cart/cart.reducer';
 import * as fromMenuItem from './store/reducers/menu-item/menu-item.reducer';
 import { CartComponent } from './pages/cart/cart.component';
@@ -41,7 +44,9 @@ import { CartComponent } from './pages/cart/cart.component';
     CartComponent,
     FooterComponent,
     IngredientComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    UserProfileComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

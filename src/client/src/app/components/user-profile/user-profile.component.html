@@ -1,0 +1,8 @@
+<h1 class="header">User Information</h1>
+<div class="infoContainer">
+<h1  class="userInfo">Name:    {{loggedInUser?.firstname}}</h1>
+<h1 *ngIf="loggedInUser" class="userInfo">Username:    {{loggedInUser?.lastname}}</h1>
+<h1 *ngIf="loggedInUser" class="userInfo">Email:    {{loggedInUser?.email}}</h1>
+<h1 *ngIf="loggedInUser" class="userInfo">Points:    {{loggedInUser?.points}}</h1>
+<button (click)="logoutUser()">Log out</button>
+</div>

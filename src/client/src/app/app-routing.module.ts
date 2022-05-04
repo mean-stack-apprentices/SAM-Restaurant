@@ -1,3 +1,4 @@
+import { ProfileComponent } from './pages/profile/profile.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'
 import { UsersListComponent } from './components/users-list/users-list.component';
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path:'menu', component:MenuListComponent},
 {path:'menu/:category', component:MenuListComponent},
 {path:'menu/:category/:menuid/:ingredients', component:IngredientComponent},
+{path: 'user', component: ProfileComponent},
 {path:'cart', component:CartComponent},
   {path:'',component:HomeComponent}
 

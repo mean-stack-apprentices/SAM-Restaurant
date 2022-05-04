@@ -30,7 +30,6 @@ export class UserLoginComponent implements OnInit {
   }
 
   signIn() {
-    console.log(this.signInForm.value)
    this.store.dispatch(loginUser({data: this.signInForm.value}))
     this.signInForm.reset();
   }
