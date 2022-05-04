@@ -9,6 +9,7 @@ import { IngredientComponent } from './pages/ingredient/ingredient.component';
 import { MenuListComponent } from './pages/menu-list/menu-list.component';
 import { PageUsersComponent } from './pages/page-users/page-users.component';
 import { UserLoginComponent } from './components/user-login/user-login.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 const routes: Routes = [
   {path: 'create-user', component: PageUsersComponent},
@@ -18,6 +19,7 @@ const routes: Routes = [
 {path:'menu/:category', component:MenuListComponent},
 {path:'menu/:category/:menuid/:ingredients', component:IngredientComponent},
 {path: 'user', component: ProfileComponent},
+{path:'cart', component:CartComponent},
   {path:'',component:HomeComponent}
 
 ];

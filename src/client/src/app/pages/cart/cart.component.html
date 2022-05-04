@@ -1,0 +1,16 @@
+<div >
+  <div *ngFor="let item of cart" class="product">
+    <div class="product_row">
+    <img src="{{item.image}}" alt="image">
+    </div>
+    <div class="product_info">
+      <p class="product_title">{{ item.name}}</p>
+      Price: <small>$</small><strong class="product_price">{{ item.price }}</strong>
+      <button (click)="deleteFromCart(item)" class="delete_button" >
+        delete
+      </button>
+    </div>
+    </div>
+
+</div>
+

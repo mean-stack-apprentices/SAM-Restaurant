@@ -22,15 +22,14 @@ import { CategoryComponent } from './pages/category/category.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
-
-
 import { IngredientComponent } from './pages/ingredient/ingredient.component';
 import { UserLoginComponent } from './components/user-login/user-login.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
+import * as fromCart from './store/reducers/cart/cart.reducer';
+import * as fromMenuItem from './store/reducers/menu-item/menu-item.reducer';
+import { CartComponent } from './pages/cart/cart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +41,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
     HomeComponent,
     NavigationComponent,
     CategoryComponent,
+    CartComponent,
     FooterComponent,
     IngredientComponent,
     UserLoginComponent,
@@ -58,6 +58,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
+    StoreModule.forFeature(fromMenuItem.menuItemFeatureKey, fromMenuItem.reducer),
+    StoreModule.forFeature(fromCart.cartFeatureKey, fromCart.reducer),
     EffectsModule.forRoot([UserEffects]),
     BrowserAnimationsModule,
   ],

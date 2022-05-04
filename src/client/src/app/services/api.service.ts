@@ -7,7 +7,7 @@ import { Postable } from '../models/postable';
 })
 export class ApiService {
   baseUrl:string = 'http://localhost:3501/';
-  constructor(private http: HttpClient) 
+  constructor(private http: HttpClient)
   { }
 
   get<T>(resourceName: string) {
@@ -21,7 +21,9 @@ export class ApiService {
     return this.http.delete<T>(this.baseUrl + resourceName);
   }
 
-  put<T>(resourceName: string, data: Postable) {
-    return this.http.put<T>(this.baseUrl + resourceName, data);
+  put<T>(resourceName: string, data: any) {
+    return this.http.put<T>(this.baseUrl + resourceName, data, {
+      withCredentials: true,
+    });
   }
 }

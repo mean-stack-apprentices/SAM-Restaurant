@@ -18,7 +18,7 @@ export class MenuItemsService {
   }
   selectedMenuItem(menuId: string | null) {
     return this.api.get<{ data: MenuItems }>(menuId + '/ingredients').pipe(
-      tap((data) => console.log(data)),
+      tap(),
       map((res) => (this.menuItem = res.data))
     );
   }

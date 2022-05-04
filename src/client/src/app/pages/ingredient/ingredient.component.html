@@ -5,7 +5,7 @@
         <h1 class="name">{{ item.name }}</h1>
         <p class="price">${{ item.price }}</p>
         <button class="qty">Quantity</button> <br />
-        <button class="orderButton">Start an order</button>
+        <a [routerLink]=" ['/cart']"><button class="orderButton">Add to Cart</button></a>
       </div>
     </div>
     <div><img class="mainImg" src="{{ item.image }}" alt="image" /></div>
