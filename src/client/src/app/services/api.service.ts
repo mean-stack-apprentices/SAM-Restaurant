@@ -13,8 +13,10 @@ export class ApiService {
   get<T>(resourceName: string) {
     return this.http.get<T>(this.baseUrl + resourceName);
   }
-  post<T>(resourceName: string, data: Postable) {
-    return this.http.post<T>(this.baseUrl + resourceName, data);
+  post<T>(resourceName: string, data: any) {
+    return this.http.post<T>(this.baseUrl + resourceName, data, {
+      withCredentials: true,
+    });
   }
 
   delete<T>(resourceName: string) {
