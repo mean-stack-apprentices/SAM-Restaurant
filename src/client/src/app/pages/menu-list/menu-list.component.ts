@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { CartService } from 'src/app/services/cart.service';
 import { MenuItemsService } from 'src/app/services/menu-items.service';
 import { MenuItems } from '../../../../../shared/models/menuItems.model';
 
@@ -17,7 +18,8 @@ export class MenuListComponent implements OnInit {
   constructor(
     public router: ActivatedRoute,
     private routers: Router,
-    public menuItemService: MenuItemsService
+    public menuItemService: MenuItemsService,
+    private cartService:CartService
   ) {
     this.router.paramMap.subscribe((route) => {
       console.log(route);
@@ -29,4 +31,13 @@ export class MenuListComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+addToCart(item:MenuItems) {
+  this.cartService.addToCart(item)
 }
+}
+
+
+
+
+

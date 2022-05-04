@@ -2,11 +2,11 @@
   <div>
     <ul>
       <li>
-        <span class="ourmenu" (click)="toggleIsOpen()"
+        <span id="menuToggle" class="ourmenu" (click)="toggleIsOpen()"
           >Our Menu
           <span
             id="drower"
-            class="bg-secondary"
+
             [ngClass]="{ closed: !isOpen, open: isOpen }"
           >
             <div class="hideSlide">
@@ -41,16 +41,22 @@
   <div>
     <ul>
       <li>
-        <a routerLink="login" class="">Sign in or join my panera</a>
+        <a routerLink="login" class="">Sign In or Join MyPanera</a>
 
       </li>
-      <li><a routerLink="" class="">start order</a></li>
+      <li><a routerLink="" class="">Start an Order</a></li>
       <li>
         <a routerLink="" class="">search our menu</a>
       </li>
+      <li *ngIf="cart as c" >
+        <a routerLink="/cart" class="cart">
+          {{c.length}}
+          <i style="font-size: 15px" class="fas fa-cart-plus"></i
+            ><span class="cart-text"></span>
+        </a>
+
+      </li>
     </ul>
   </div>
-</div>
-<div class="new">
 
 </div>

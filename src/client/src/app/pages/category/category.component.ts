@@ -6,19 +6,14 @@ import { Category } from '../../../../../shared/models/category.model';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit {
-  category$: Observable<Category[]>
-  // categories$:Observable<Category[]>
-  constructor(
-    private categoryService: CategoryService
-  ) {
-    this.category$ = this.categoryService.getCategories()
-    // this.categories$ = this.categoryService.GetCategories()
+  category$: Observable<Category[]>;
+
+  constructor(private categoryService: CategoryService) {
+    this.category$ = this.categoryService.getCategories();
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

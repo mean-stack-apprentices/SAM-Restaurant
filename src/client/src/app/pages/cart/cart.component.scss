@@ -1,0 +1,36 @@
+.product{
+  padding: 20px;
+}
+img {
+  max-height: 200px;
+  width: 70%;
+
+}
+
+.product_title {
+  font-size: 18px;
+  font-weight: 700;
+
+
+}
+
+.product_row {
+  display: flex;
+  padding: 10px;
+  height: 200px;
+  width: 300px;
+
+}
+.product_info {
+padding-left: 20px;
+}
+
+.delete_button {
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(41, 37, 37);
+  padding: 5px;
+ margin-left: 15px;
+  cursor: pointer;
+}
