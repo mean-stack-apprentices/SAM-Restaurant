@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
         items: 1
       },
       400: {
-        items: 1
+        items: 3
       },
       740: {
         items: 3
